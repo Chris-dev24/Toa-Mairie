@@ -1,19 +1,4 @@
 const express = require('express');
-const { authMiddleware, roleMiddleware } = require('../middleware/auth');
-const controller = require('../controllers/taskController');
-
-const router = express.Router();
-
-router.use(authMiddleware);
-
-router.post('/', roleMiddleware(['ADMIN', 'SERVICE_HEAD', 'SECRETARY', 'FIELD_AGENT']), controller.createTask);
-router.get('/', controller.listTasks);
-router.get('/:id', controller.getTask);
-router.put('/:id', roleMiddleware(['ADMIN', 'SERVICE_HEAD']), controller.updateTask);
-router.delete('/:id', roleMiddleware(['ADMIN']), controller.deleteTask);
-
-module.exports = router;
-const express = require('express');
 const { body, validationResult } = require('express-validator');
 const { Task, Project, User } = require('../models');
 const { authMiddleware } = require('../middleware/auth');

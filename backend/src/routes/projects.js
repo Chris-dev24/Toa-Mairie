@@ -1,21 +1,4 @@
 const express = require('express');
-const { authMiddleware, roleMiddleware } = require('../middleware/auth');
-const controller = require('../controllers/projectController');
-
-const router = express.Router();
-
-// Only authenticated users
-router.use(authMiddleware);
-
-// CRUD
-router.post('/', roleMiddleware(['ADMIN', 'SERVICE_HEAD', 'DIRECTOR']), controller.createProject);
-router.get('/', controller.listProjects);
-router.get('/:id', controller.getProject);
-router.put('/:id', roleMiddleware(['ADMIN', 'SERVICE_HEAD', 'DIRECTOR']), controller.updateProject);
-router.delete('/:id', roleMiddleware(['ADMIN']), controller.deleteProject);
-
-module.exports = router;
-const express = require('express');
 const { body, validationResult } = require('express-validator');
 const { Project, Task, User } = require('../models');
 const { authMiddleware, roleMiddleware } = require('../middleware/auth');
