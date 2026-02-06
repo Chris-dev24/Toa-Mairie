@@ -167,3 +167,42 @@ export const dashboardService = {
     return response.data;
   }
 };
+
+export const messagingService = {
+  sendMessage: async (payload) => {
+    const response = await apiClient.post('/messaging', payload);
+    return response.data;
+  },
+
+  getMessages: async (params) => {
+    const response = await apiClient.get('/messaging', { params });
+    return response.data;
+  },
+
+  getConversations: async () => {
+    const response = await apiClient.get('/messaging/conversations');
+    return response.data;
+  },
+
+  markAsRead: async (messageId) => {
+    const response = await apiClient.post('/messaging/read', { messageId });
+    return response.data;
+  }
+};
+
+export const offlineService = {
+  queueSubmission: async (payload) => {
+    const { addSubmission } = await import('../utils/idb');
+    return addSubmission(payload);
+  },
+
+  getQueued: async () => {
+    const { getAllSubmissions } = await import('../utils/idb');
+    return getAllSubmissions();
+  },
+
+  deleteQueued: async (id) => {
+    const { deleteSubmission } = await import('../utils/idb');
+    return deleteSubmission(id);
+  }
+};

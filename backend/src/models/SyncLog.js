@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('./index');
 
-const SyncLog = sequelize.define('SyncLog', {
+module.exports = (sequelize) => {
+  const SyncLog = sequelize.define('SyncLog', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -63,9 +63,10 @@ const SyncLog = sequelize.define('SyncLog', {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW
   }
-}, {
-  timestamps: true,
-  tableName: 'sync_logs'
-});
+  }, {
+    timestamps: true,
+    tableName: 'sync_logs'
+  });
 
-module.exports = SyncLog;
+  return SyncLog;
+};

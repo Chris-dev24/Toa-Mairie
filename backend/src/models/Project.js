@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('./index');
 
-const Project = sequelize.define('Project', {
+module.exports = (sequelize) => {
+  const Project = sequelize.define('Project', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -71,9 +71,10 @@ const Project = sequelize.define('Project', {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW
   }
-}, {
-  timestamps: true,
-  tableName: 'projects'
-});
+  }, {
+    timestamps: true,
+    tableName: 'projects'
+  });
 
-module.exports = Project;
+  return Project;
+};

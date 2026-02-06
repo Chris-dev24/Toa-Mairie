@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('./index');
 
-const AuditLog = sequelize.define('AuditLog', {
+module.exports = (sequelize) => {
+  const AuditLog = sequelize.define('AuditLog', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -14,12 +14,13 @@ const AuditLog = sequelize.define('AuditLog', {
       model: 'users',
       key: 'id'
     }
-  },
-  action: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  resourceType: {
+    }, {
+      timestamps: true,
+      tableName: 'audit_logs'
+    });
+
+    return AuditLog;
+  };
     type: DataTypes.STRING,
     allowNull: false,
     comment: 'User, Project, Task, Document, etc.'

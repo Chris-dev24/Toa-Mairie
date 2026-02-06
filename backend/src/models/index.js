@@ -4,16 +4,16 @@ const logger = require('../utils/logger');
 
 const sequelize = new Sequelize(config);
 
-// Import models
-const User = require('./User');
-const Project = require('./Project');
-const Task = require('./Task');
-const Document = require('./Document');
-const Message = require('./Message');
-const Form = require('./Form');
-const FormSubmission = require('./FormSubmission');
-const AuditLog = require('./AuditLog');
-const SyncLog = require('./SyncLog');
+// Import models (each exports a function that accepts the sequelize instance)
+const User = require('./User')(sequelize);
+const Project = require('./Project')(sequelize);
+const Task = require('./Task')(sequelize);
+const Document = require('./Document')(sequelize);
+const Message = require('./Message')(sequelize);
+const Form = require('./Form')(sequelize);
+const FormSubmission = require('./FormSubmission')(sequelize);
+const AuditLog = require('./AuditLog')(sequelize);
+const SyncLog = require('./SyncLog')(sequelize);
 
 // Define associations
 User.hasMany(Project, { as: 'createdProjects', foreignKey: 'createdBy' });

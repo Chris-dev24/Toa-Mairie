@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('./index');
 const bcrypt = require('bcryptjs');
 
-const User = sequelize.define('User', {
+module.exports = (sequelize) => {
+  const User = sequelize.define('User', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -64,30 +64,31 @@ const User = sequelize.define('User', {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW
   }
-}, {
-  timestamps: true,
-  tableName: 'users',
-  hooks: {
-    beforeCreate: async (user) => {
-      if (user.password) {
-        user.password = await bcrypt.hash(user.password, 10);
-      }
-    },
-    beforeUpdate: async (user) => {
-      if (user.changed('password')) {
-        user.password = await bcrypt.hash(user.password, 10);
+  }, {
+    timestamps: true,
+    tableName: 'users',
+    hooks: {
+      beforeCreate: async (user) => {
+        if (user.password) {
+          user.password = await bcrypt.hash(user.password, 10);
+        }
+      },
+      beforeUpdate: async (user) => {
+        if (user.changed('password')) {
+          user.password = await bcrypt.hash(user.password, 10);
+        }
       }
     }
-  }
-});
+  });
 
-User.prototype.comparePassword = async function(password) {
-  return bcrypt.compare(password, this.password);
+  User.prototype.comparePassword = async function(password) {
+    return bcrypt.compare(password, this.password);
+  };
+
+  User.prototype.toJSON = function() {
+    const { password, ...rest } = this.get();
+    return rest;
+  };
+
+  return User;
 };
-
-User.prototype.toJSON = function() {
-  const { password, ...rest } = this.get();
-  return rest;
-};
-
-module.exports = User;

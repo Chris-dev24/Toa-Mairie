@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { messagingService } from '../services';
 import { toast } from 'react-toastify';
 import useAuthStore from '../store/auth';
+import useSocket, { useConversationSocket } from '../hooks/useSocket';
 
 const Messaging = () => {
   const { user } = useAuthStore();
@@ -10,22 +11,88 @@ const Messaging = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(true);
+  const socket = useSocket();
 
   useEffect(() => {
-    // Fetch conversations stub - à intégrer avec WebSocket
-    setLoading(false);
+    const load = async () => {
+      try {
+        const resp = await messagingService.getConversations();
+        setConversations(resp.data || []);
+      } catch (err) {
+        toast.error('Erreur lors du chargement des conversations');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    load();
   }, []);
 
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
 
     try {
-      // Implement message sending
+      const payload = {
+        content: newMessage.trim(),
+        receiverId: selectedConversation?.partnerId
+      };
+
+      const resp = await messagingService.sendMessage(payload);
+      // server will emit 'message_received' to recipients; append locally as well
+      setMessages((m) => [resp.data, ...m]);
       setNewMessage('');
     } catch (error) {
       toast.error('Erreur lors de l'envoi du message');
     }
   };
+
+  // Auto-join selected conversation via hook
+  useConversationSocket(selectedConversation?.partnerId);
+
+  // Listen for incoming messages
+  useEffect(() => {
+    if (!socket) return;
+
+    const handler = (message) => {
+      // Only append messages relevant to the selected conversation
+      const partnerId = selectedConversation?.partnerId;
+      const isForThisConversation = (
+        (message.receiverId && message.receiverId === user?.id && message.senderId === partnerId) ||
+        (message.senderId && message.senderId === partnerId && message.receiverId === user?.id) ||
+        (message.groupId && selectedConversation?.groupId && message.groupId === selectedConversation.groupId)
+      );
+
+      if (isForThisConversation) {
+        setMessages((prev) => [message, ...prev]);
+      }
+    };
+
+    socket.on('message_received', handler);
+
+    return () => {
+      socket.off('message_received', handler);
+    };
+  }, [socket, selectedConversation, user]);
+
+  // Load messages when selecting a conversation
+  useEffect(() => {
+    if (!selectedConversation) return;
+
+    const loadMessages = async () => {
+      try {
+        setLoading(true);
+        const params = { conversationWith: selectedConversation.partnerId, limit: 100 };
+        const resp = await messagingService.getMessages(params);
+        setMessages(resp.data || []);
+      } catch (err) {
+        toast.error('Erreur lors du chargement des messages');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadMessages();
+  }, [selectedConversation]);
 
   return (
     <div className="h-screen flex">

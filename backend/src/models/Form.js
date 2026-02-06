@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('./index');
 
-const Form = sequelize.define('Form', {
+module.exports = (sequelize) => {
+  const Form = sequelize.define('Form', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -45,9 +45,10 @@ const Form = sequelize.define('Form', {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW
   }
-}, {
-  timestamps: true,
-  tableName: 'forms'
-});
+  }, {
+    timestamps: true,
+    tableName: 'forms'
+  });
 
-module.exports = Form;
+  return Form;
+};

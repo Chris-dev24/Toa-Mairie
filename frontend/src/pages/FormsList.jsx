@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { formService } from '../services';
 import { toast } from 'react-toastify';
+import useOfflineSync from '../hooks/useOfflineSync';
+import { offlineService } from '../services';
 
 const FormsList = () => {
   const [forms, setForms] = useState([]);
@@ -11,6 +13,7 @@ const FormsList = () => {
   useEffect(() => {
     fetchForms();
   }, [status]);
+  useOfflineSync();
 
   const fetchForms = async () => {
     try {
@@ -27,7 +30,14 @@ const FormsList = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'ACTIVE':
-        return 'bg-green-100 text-green-800';
+      if (!navigator.onLine) {
+        // queue for offline
+        await offlineService.queueSubmission({ formId, data });
+        toast.info('Soumission mise en file (hors-ligne). Elle sera synchronisée lors de la connexion.');
+        return;
+      }
+
+      await submitForm(formId, data);
       case 'DRAFT':
         return 'bg-blue-100 text-blue-800';
       case 'ARCHIVED':
