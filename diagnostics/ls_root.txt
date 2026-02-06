@@ -1,0 +1,27 @@
+total 108
+drwxrwxrwx+ 10 codespace root      4096 Feb  6 21:30 .
+drwxr-xrwx+  5 codespace root      4096 Feb  4 08:54 ..
+drwxrwxrwx+  8 codespace root      4096 Feb  6 20:45 .git
+-rw-rw-rw-   1 codespace root      2152 Feb  4 08:54 .gitignore
+-rw-rw-rw-   1 codespace codespace 4224 Feb  6 07:14 GETTING_STARTED.md
+-rw-rw-rw-   1 codespace root      1068 Feb  4 08:54 LICENSE
+-rw-rw-rw-   1 codespace codespace 3708 Feb  6 06:46 QUICKSTART.md
+-rw-rw-rw-   1 codespace root       208 Feb  4 08:54 README.md
+-rw-rw-rw-   1 codespace codespace 3077 Feb  6 21:07 RUNNING.md
+-rw-rw-rw-   1 codespace codespace 6525 Feb  6 06:50 SETUP.md
+drwxrwxrwx+  6 codespace codespace 4096 Feb  6 06:39 backend
+-rwxrwxrwx   1 codespace codespace  620 Feb  6 21:02 build-frontend.sh
+-rw-rw-rw-   1 codespace codespace 1706 Feb  6 20:21 deploy.bat
+-rw-rw-rw-   1 codespace codespace 1893 Feb  6 07:14 deploy.sh
+drwxrwxrwx+  2 codespace codespace 4096 Feb  6 21:30 diagnostics
+-rw-rw-rw-   1 codespace codespace 1203 Feb  5 14:15 docker-compose.yml
+drwxrwxrwx+  2 codespace codespace 4096 Feb  4 09:15 docs
+drwxrwxrwx+  6 codespace codespace 4096 Feb  6 20:52 frontend
+-rw-rw-rw-   1 codespace codespace 2808 Feb  6 21:07 full-build.sh
+drwxrwxrwx+  2 codespace codespace 4096 Feb  4 09:02 mobile
+-rw-rw-rw-   1 codespace codespace   89 Feb  6 20:47 package-lock.json
+drwxrwxrwx+  2 codespace codespace 4096 Feb  6 20:34 public
+-rwxrwxrwx   1 codespace codespace  498 Feb  6 20:31 run-tests.sh
+drwxrwxrwx+  2 codespace codespace 4096 Feb  6 21:27 scripts
+-rwxrwxrwx   1 codespace codespace 1795 Feb  6 21:02 setup-and-run.sh
+-rw-rw-rw-   1 codespace codespace    0 Feb  6 09:20 start-app.bat

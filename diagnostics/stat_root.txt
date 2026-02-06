@@ -1,0 +1,8 @@
+  File: .
+  Size: 4096      	Blocks: 8          IO Block: 4096   directory
+Device: 7,4	Inode: 1572874     Links: 10
+Access: (0777/drwxrwxrwx)  Uid: ( 1000/codespace)   Gid: (    0/    root)
+Access: 2026-02-06 21:30:33.047679559 +0000
+Modify: 2026-02-06 21:30:32.944679554 +0000
+Change: 2026-02-06 21:30:32.944679554 +0000
+ Birth: 2026-02-04 08:54:50.067935520 +0000

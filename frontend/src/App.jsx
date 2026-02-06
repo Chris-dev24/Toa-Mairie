@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
 import Login from './pages/Login';
+import OfflineQueue from './components/OfflineQueue';
 import Dashboard from './pages/Dashboard';
 import ProjectDetail from './pages/ProjectDetail';
 import ProjectsList from './pages/ProjectsList';
@@ -76,6 +77,14 @@ function App() {
           element={
             <PrivateRoute>
               <UserProfile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/offline-queue"
+          element={
+            <PrivateRoute>
+              <OfflineQueue />
             </PrivateRoute>
           }
         />
