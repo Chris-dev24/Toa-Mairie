@@ -1,0 +1,37 @@
+{
+  "name": "toa-mairie-backend",
+  "version": "1.0.0",
+  "description": "Backend API pour l'application de productivité de la Mairie de Toamasina",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest --coverage",
+    "migrate": "node src/migrations/run.js",
+    "seed": "node src/seeds/index.js"
+  },
+  "keywords": ["mairie", "productivité", "toamasina"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "pg": "^8.11.0",
+    "sequelize": "^6.35.0",
+    "jsonwebtoken": "^8.5.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "express-validator": "^7.0.0",
+    "winston": "^3.11.0",
+    "socket.io": "^4.7.2",
+    "multer": "^1.4.5-lts.1",
+    "axios": "^1.6.2",
+    "express-async-errors": "^3.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "sequelize-cli": "^6.6.1"
+  }
+}
