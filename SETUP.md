@@ -1,45 +1,104 @@
-# Setup Initial Guide
+# 📋 Setup Guide - Configuration Complète
 
-## Backend Setup
+Guide complet pour configurer l'environnement de développement.
 
-### Prerequisites
-- Node.js 16+ and npm
-- PostgreSQL 12+
-- Git
+## 1️⃣ Prérequis Système
 
-### Installation
+### Logiciels Requis
+- **Node.js** 18+ - [Télécharger](https://nodejs.org)
+- **PostgreSQL** 12+ - [Télécharger](https://www.postgresql.org)
+- **Git** - [Télécharger](https://git-scm.com)
+- **VS Code** (optionnel) - [Télécharger](https://code.visualstudio.com)
 
-1. Clone the repository
+### Vérifier les Installations
+
 ```bash
-git clone <repo-url>
-cd Backend
+node -v        # v18.0.0 ou plus
+npm -v         # v9.0.0 ou plus
+psql -v        # psql (PostgreSQL) 12.0 ou plus
+git -v         # git version 2.30.0 ou plus
 ```
 
-2. Install dependencies
+## 2️⃣ Backend Setup
+
+### Étape 1 : Installer les Dépendances
+
 ```bash
+cd backend
 npm install
 ```
 
-3. Configure environment
+### Étape 2 : Configurer PostgreSQL
+
 ```bash
-cp .env.example .env
-# Edit .env with your database credentials
+# Se connecter à PostgreSQL
+psql -U postgres
+
+# Créer la base de données
+CREATE DATABASE toa_mairie_db;
+\q
 ```
 
-4. Run migrations and seeds
+### Étape 3 : Configuration des Variables d'Environnement
+
+```bash
+# Copier le fichier d'exemple
+cp .env.example .env
+
+# Éditer .env avec vos paramètres
+```
+
+Configuration minimale:
+```env
+NODE_ENV=development
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=toa_mairie_db
+DB_USER=postgres
+DB_PASSWORD=password
+JWT_SECRET=dev_secret_key_change_in_production
+PORT=5000
+```
+
+### Étape 4 : Initialiser la Base de Données
+
 ```bash
 npm run migrate
 npm run seed
 ```
 
-5. Start development server
+### Étape 5 : Démarrer le Backend
+
 ```bash
 npm run dev
 ```
 
-Server will be running on `http://localhost:5000`
+Server sur `http://localhost:5000`
 
-## API Endpoints
+## 3️⃣ Frontend Setup
+
+### Étape 1 : Installer les Dépendances
+
+```bash
+cd ../frontend
+npm install
+```
+
+### Étape 2 : Configuration
+
+```bash
+cp .env.example .env
+```
+
+### Étape 3 : Démarrer
+
+```bash
+npm start
+```
+
+Frontend sur `http://localhost:3000`
+
+## 4️⃣ API Endpoints
 
 ### Authentication
 - `POST /api/auth/register` - Register new user
