@@ -26,10 +26,7 @@ module.exports = (sequelize) => {
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false,
-    get() {
-      return undefined; // Never return password hash
-    }
+    allowNull: false
   },
   phone: {
     type: DataTypes.STRING,
@@ -82,12 +79,18 @@ module.exports = (sequelize) => {
   });
 
   User.prototype.comparePassword = async function(password) {
-    return bcrypt.compare(password, this.password);
+    // Access the raw dataValues to get the hashed password
+    const hashedPassword = this.dataValues.password || this.password;
+    if (!hashedPassword) {
+      return false;
+    }
+    return bcrypt.compare(password, hashedPassword);
   };
 
   User.prototype.toJSON = function() {
-    const { password, ...rest } = this.get();
-    return rest;
+    const values = this.get();
+    delete values.password; // Never return password hash
+    return values;
   };
 
   return User;
