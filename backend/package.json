@@ -10,28 +10,33 @@
     "migrate": "node src/migrations/run.js",
     "seed": "node src/seeds/index.js"
   },
-  "keywords": ["mairie", "productivité", "toamasina"],
+  "keywords": [
+    "mairie",
+    "productivité",
+    "toamasina"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "axios": "^1.6.2",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "express-validator": "^7.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.5-lts.1",
     "pg": "^8.11.0",
     "sequelize": "^6.35.0",
-    "jsonwebtoken": "^8.5.1",
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^16.3.1",
-    "cors": "^2.8.5",
-    "express-validator": "^7.0.0",
-    "winston": "^3.11.0",
     "socket.io": "^4.7.2",
-    "multer": "^1.4.5-lts.1",
-    "axios": "^1.6.2",
-    "express-async-errors": "^3.1.1"
+    "sqlite3": "^6.0.1",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2",
     "jest": "^29.7.0",
-    "supertest": "^6.3.3",
-    "sequelize-cli": "^6.6.1"
+    "nodemon": "^3.0.2",
+    "sequelize-cli": "^6.6.1",
+    "supertest": "^6.3.3"
   }
 }

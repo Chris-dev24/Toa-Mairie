@@ -68,7 +68,7 @@ module.exports = (sequelize) => {
     allowNull: true
   },
   tags: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
+    type: DataTypes.JSON,
     defaultValue: []
   },
   createdAt: {

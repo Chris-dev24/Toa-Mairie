@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { projectService, taskService } from '../services';
+import { projectService } from '../services';
 import { toast } from 'react-toastify';
 
 const ProjectDetail = () => {

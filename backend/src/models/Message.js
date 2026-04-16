@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
     allowNull: false
   },
   attachments: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
+    type: DataTypes.JSON,
     defaultValue: []
   },
   isRead: {

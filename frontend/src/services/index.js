@@ -92,6 +92,38 @@ export const taskService = {
   }
 };
 
+export const documentService = {
+  getAll: async (params) => {
+    const response = await apiClient.get('/documents', { params });
+    return response.data;
+  },
+
+  getById: async (id) => {
+    const response = await apiClient.get(`/documents/${id}`);
+    return response.data;
+  },
+
+  create: async (data) => {
+    const response = await apiClient.post('/documents', data);
+    return response.data;
+  },
+
+  update: async (id, data) => {
+    const response = await apiClient.put(`/documents/${id}`, data);
+    return response.data;
+  },
+
+  delete: async (id) => {
+    const response = await apiClient.delete(`/documents/${id}`);
+    return response.data;
+  },
+
+  share: async (id, userIds) => {
+    const response = await apiClient.post(`/documents/${id}/share`, { userIds });
+    return response.data;
+  }
+};
+
 export const formService = {
   getAll: async (params) => {
     const response = await apiClient.get('/forms', { params });

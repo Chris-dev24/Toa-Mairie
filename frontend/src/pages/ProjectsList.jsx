@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { projectService } from '../services';
 import { toast } from 'react-toastify';
@@ -8,11 +8,7 @@ const ProjectsList = () => {
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({ status: '', priority: '', page: 1, limit: 20 });
 
-  useEffect(() => {
-    fetchProjects();
-  }, [filters]);
-
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     try {
       setLoading(true);
       const response = await projectService.getAll(filters);
@@ -22,7 +18,11 @@ const ProjectsList = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   const getStatusColor = (status) => {
     switch (status) {

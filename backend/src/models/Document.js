@@ -48,7 +48,7 @@ module.exports = (sequelize) => {
     defaultValue: false
   },
   sharedWith: {
-    type: DataTypes.ARRAY(DataTypes.UUID),
+    type: DataTypes.JSON,
     defaultValue: []
   },
   createdAt: {

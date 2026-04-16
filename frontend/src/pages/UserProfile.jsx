@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { userService, taskService } from '../services';
 import { toast } from 'react-toastify';
@@ -13,11 +13,7 @@ const UserProfile = () => {
 
   const userId = id || currentUser?.id;
 
-  useEffect(() => {
-    fetchUserData();
-  }, [userId]);
-
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     try {
       setLoading(true);
       const userResponse = await userService.getById(userId);
@@ -31,7 +27,13 @@ const UserProfile = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
+
+  useEffect(() => {
+    if (userId) {
+      fetchUserData();
+    }
+  }, [userId, fetchUserData]);
 
   if (loading) {
     return <div className="flex items-center justify-center h-screen">Chargement...</div>;

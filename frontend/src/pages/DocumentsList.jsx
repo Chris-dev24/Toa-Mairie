@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { documentService } from '../services';
 import { toast } from 'react-toastify';
 
@@ -7,11 +7,7 @@ const DocumentsList = () => {
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState('');
 
-  useEffect(() => {
-    fetchDocuments();
-  }, [category]);
-
-  const fetchDocuments = async () => {
+  const fetchDocuments = useCallback(async () => {
     try {
       setLoading(true);
       const response = await documentService.getAll({ category: category || undefined });
@@ -21,7 +17,11 @@ const DocumentsList = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [category]);
+
+  useEffect(() => {
+    fetchDocuments();
+  }, [fetchDocuments]);
 
   const handleDownload = (document) => {
     window.open(document.filePath, '_blank');

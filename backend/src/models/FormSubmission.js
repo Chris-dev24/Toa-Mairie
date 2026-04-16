@@ -29,11 +29,12 @@ module.exports = (sequelize) => {
     comment: 'Submitted form data'
   },
   geoLocation: {
-    type: DataTypes.GEOMETRY('POINT'),
-    allowNull: true
+    type: DataTypes.JSON,
+    allowNull: true,
+    comment: 'Latitude and longitude as {lat, lng}'
   },
   attachments: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
+    type: DataTypes.JSON,
     defaultValue: []
   },
   submittedAt: {
