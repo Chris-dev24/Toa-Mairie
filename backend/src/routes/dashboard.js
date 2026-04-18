@@ -196,4 +196,80 @@ router.get('/communication', authMiddleware, async (req, res) => {
   }
 });
 
+// Admin Dashboard
+router.get('/admin', authMiddleware, async (req, res) => {
+  try {
+    // Get comprehensive statistics for admin view
+    const totalProjects = await Project.count();
+    const activeProjects = await Project.count({ where: { status: 'IN_PROGRESS' } });
+    const completedProjects = await Project.count({ where: { status: 'COMPLETED' } });
+    
+    const totalTasks = await Task.count();
+    const completedTasks = await Task.count({ where: { status: 'COMPLETED' } });
+    const overdueTasks = await Task.count({
+      where: {
+        status: { [Op.ne]: 'COMPLETED' },
+        dueDate: { [Op.lt]: new Date() }
+      }
+    });
+
+    const activeUsers = await User.count({ where: { isActive: true } });
+    const inactiveUsers = await User.count({ where: { isActive: false } });
+
+    const totalSubmissions = await FormSubmission.count();
+    const pendingSubmissions = await FormSubmission.count({ where: { status: 'PENDING' } });
+
+    // Get statistics by project status
+    const projectStats = await Project.findAll({
+      attributes: [
+        'status',
+        [Sequelize.fn('COUNT', Sequelize.col('id')), 'count']
+      ],
+      group: ['status']
+    });
+
+    // Get users by role
+    const usersByRole = await User.findAll({
+      attributes: [
+        'role',
+        [Sequelize.fn('COUNT', Sequelize.col('id')), 'count']
+      ],
+      group: ['role']
+    });
+
+    res.json({
+      success: true,
+      data: {
+        projects: {
+          total: totalProjects,
+          active: activeProjects,
+          completed: completedProjects,
+          stats: projectStats
+        },
+        tasks: {
+          total: totalTasks,
+          completed: completedTasks,
+          overdue: overdueTasks,
+          completionRate: totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0
+        },
+        users: {
+          active: activeUsers,
+          inactive: inactiveUsers,
+          byRole: usersByRole
+        },
+        forms: {
+          total: totalSubmissions,
+          pending: pendingSubmissions
+        }
+      }
+    });
+  } catch (error) {
+    logger.error('Admin dashboard error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: error.message 
+    });
+  }
+});
+
 module.exports = router;

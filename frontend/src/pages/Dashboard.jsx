@@ -15,6 +15,9 @@ const Dashboard = () => {
         setLoading(true);
         let response;
         switch (user?.role) {
+          case 'ADMIN':
+            response = await dashboardService.getAdmin();
+            break;
           case 'DIRECTOR':
             response = await dashboardService.getDirector();
             break;

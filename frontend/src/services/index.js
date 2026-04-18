@@ -179,6 +179,11 @@ export const userService = {
 };
 
 export const dashboardService = {
+  getAdmin: async () => {
+    const response = await apiClient.get('/dashboard/admin');
+    return response.data;
+  },
+
   getDirector: async () => {
     const response = await apiClient.get('/dashboard/director');
     return response.data;
